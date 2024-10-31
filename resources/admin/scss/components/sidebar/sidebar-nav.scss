@@ -1,0 +1,13 @@
+.sidebar-nav {
+    position: relative;
+    border-right: none !important;
+    height: 100%;
+    .el-menu-item, .el-submenu__title {
+        color: #bdbdc7;
+        background-color:transparent;
+        &.is-active, &:hover {
+            background-color: #6b51df;
+            color: #fff;
+        }
+    }
+}

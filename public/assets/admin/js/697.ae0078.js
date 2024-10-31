@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[697],{28697:(t,e,o)=>{o.r(e),o.d(e,{default:()=>n});const r={methods:{getBreadcrumbName:function(){var t=this;return this.$root.isLoading=!0,axios.get("/api/admin/projects/"+this.$route.params.project_id).then((function(e){t.$route.meta.title=e.data.name,t.$root.isLoading=!1}))}},mounted:function(){}};const n=(0,o(51900).Z)(r,(function(){return(0,this._self._c)("router-view",{attrs:{project_id:this.$route.params.project_id}})}),[],!1,null,null,null).exports}}]);
+//# sourceMappingURL=697.ae0078.js.map

@@ -1,0 +1,14 @@
+.el-form-item--medium .el-form-item__content, .el-form-item--medium .el-form-item__label {
+    line-height: 1.1;
+}
+.disabled-form {
+    .el-input.is-disabled .el-input__inner {
+
+        color: #606266;;
+        cursor: auto;
+    }
+    .el-textarea.is-disabled .el-textarea__inner {
+        color: #606266;;
+        cursor: auto;
+    }
+}

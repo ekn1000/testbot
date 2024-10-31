@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[261],{97261:(t,u,e)=>{e.r(u),e.d(u,{default:()=>n});const s={methods:{},mounted:function(){}};const n=(0,e(51900).Z)(s,(function(){return(0,this._self._c)("router-view",{attrs:{group_id:this.$route.params.id}})}),[],!1,null,null,null).exports}}]);
+//# sourceMappingURL=261.9ce996.js.map

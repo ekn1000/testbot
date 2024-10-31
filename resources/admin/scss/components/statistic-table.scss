@@ -1,0 +1,19 @@
+.statistic-table {
+    overflow-x: scroll;
+    td:first-child {
+        text-align: left;
+        min-width: 300px;
+    }
+    td {
+        min-width: 120px;
+
+    }
+    &__sticky-col  {
+        background-color: #FFFFFF;
+        z-index: 2;
+        position: sticky;
+    }
+    &__first-col {
+        left: 0;
+    }
+}
