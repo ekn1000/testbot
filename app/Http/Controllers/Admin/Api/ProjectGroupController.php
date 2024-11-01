@@ -24,26 +24,10 @@ class ProjectGroupController extends Controller
             ->withSum(['projects' => function ($query) {
               $query -> where('active', 1);
             }], 'daily_volume_of_keys')
-            ->withSum(['statistics' => function ($query) {
-                $query -> whereDate('date', Carbon::now());
-                $query -> where('device', ProjectKeyStatistic::DEVICE_ALL);
-            }], 'received')
-            ->withSum(['statistics' => function ($query) {
-                $query -> whereDate('date', Carbon::now());
-                $query -> where('device', ProjectKeyStatistic::DEVICE_ALL);
-            }], 'entered')
-            ->withSum(['statistics' => function ($query) {
-                $query -> whereDate('date', Carbon::now());
-                $query -> where('device', ProjectKeyStatistic::DEVICE_ALL);
-            }], 'found')
-            ->withSum(['statistics' => function ($query) {
-                $query -> whereDate('date', Carbon::now());
-                $query -> where('device', ProjectKeyStatistic::DEVICE_ALL);
-            }], 'visited')
-            ->withSum(['statistics' => function ($query) {
-                $query -> whereDate('date', Carbon::now());
-                $query -> where('device', ProjectKeyStatistic::DEVICE_ALL);
-            }], 'notfound')
+            ->with(['totalStatistics' => function ($query) {
+                $query->whereDate('date', Carbon::now())
+                    ->where('device', ProjectKeyStatistic::DEVICE_ALL);
+            }])
             -> orderBy('created_at', 'desc')->get();
 
         return $project_groups;

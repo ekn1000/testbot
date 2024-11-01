@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\Admin\Api\ProjectController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -28,6 +29,10 @@ class ProjectGroup extends Model
     public function statistics(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
     {
         return $this->hasManyThrough(ProjectKeyStatistic::class, Project::class, 'group_id');
+    }
+    public function totalStatistics(): \Illuminate\Database\Eloquent\Relations\HasOneThrough
+    {
+        return $this->hasOneThrough(ProjectStatistics::class, Project::class, 'group_id');
     }
    public function getCountKeysAttribute()
     {

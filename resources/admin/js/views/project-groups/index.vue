@@ -111,7 +111,7 @@
                                 <el-progress
                                     :stroke-width="15"
                                     :color="'#409eff'"
-                                    :percentage="getPercentage(item.projects_sum_daily_volume_of_keys, item.statistics_sum_received)" ></el-progress>
+                                    :percentage="getPercentage(item.projects_sum_daily_volume_of_keys, item.total_statistics?.total_received)" ></el-progress>
                             </div>
                         </li>
                         <li class="inf-item-list__item inf-item-list__item--progress-bar">
@@ -125,7 +125,7 @@
                                 <el-progress
                                     :stroke-width="15"
                                     :color="'#409eff'"
-                                    :percentage="getPercentage(item.projects_sum_daily_volume_of_keys, item.statistics_sum_entered)" ></el-progress>
+                                    :percentage="getPercentage(item.projects_sum_daily_volume_of_keys, item.total_statistics?.total_entered)" ></el-progress>
                             </div>
                         </li>
                         <li class="inf-item-list__item inf-item-list__item--progress-bar">
@@ -139,7 +139,7 @@
                                 <el-progress
                                     :stroke-width="15"
                                     :color = tasksColors
-                                    :percentage="getPercentage(item.projects_sum_daily_volume_of_keys, item.statistics_sum_found)" ></el-progress>
+                                    :percentage="getPercentage(item.projects_sum_daily_volume_of_keys, item.total_statistics?.total_found)" ></el-progress>
                             </div>
                         </li>
                         <li class="inf-item-list__item inf-item-list__item--progress-bar">
@@ -153,7 +153,7 @@
                                 <el-progress
                                     :stroke-width="15"
                                     :color = tasksColors
-                                    :percentage="getPercentage(item.projects_sum_daily_volume_of_keys, item.statistics_sum_visited)" ></el-progress>
+                                    :percentage="getPercentage(item.projects_sum_daily_volume_of_keys, item.total_statistics?.total_visited)" ></el-progress>
                             </div>
                         </li>
                         <li class="inf-item-list__item inf-item-list__item--progress-bar">
@@ -167,7 +167,7 @@
                                 <el-progress
                                     :stroke-width="15"
                                     :color="notFoundTasksColors"
-                                    :percentage="getPercentage(item.projects_sum_daily_volume_of_keys, item.statistics_sum_notfound)" ></el-progress>
+                                    :percentage="getPercentage(item.projects_sum_daily_volume_of_keys, item.total_statistics?.total_notfound)" ></el-progress>
                             </div>
                         </li>
 
@@ -321,7 +321,7 @@ import edit from './edit';
             ]),
         },
         methods:{
-            getPercentage(daily_volume_of_keys, tasks ) {
+            getPercentage(daily_volume_of_keys, tasks = 0 ) {
                 return daily_volume_of_keys ?  Math.round(tasks / daily_volume_of_keys * 100) : 0;
             },
             tasksProgressBarColor(percentage) {

@@ -38,6 +38,20 @@
                     </el-option>
                 </el-select>
             </div>
+            <div class="form-group col-lg-2">
+                <label class="form-label">Сортировка запросов:</label>
+                <el-select
+                    style="width: 100%"
+                    v-model="filters.order_by" placeholder="Сортировка запросов"
+                    @change="getStatistic">
+                    <el-option
+                        v-for="item in sorts"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                    </el-option>
+                </el-select>
+            </div>
             <div class="form-group col-lg-4 statistic-calendar">
                 <label class="form-label">Выбрать период</label>
                 <el-date-picker
@@ -74,9 +88,15 @@
         <div class="table-responsive">
         <table class="statistic-table table table-bordered">
             <thead>
-            <tr>
+            <tr class="statistic-table__first-row">
                 <th class="statistic-table__first-col statistic-table__sticky-col">
                     Запросы
+                </th>
+                <th class="statistic-table__second-col statistic-table__sticky-col">
+                    Частота
+                </th>
+                <th class="statistic-table__third-col statistic-table__sticky-col">
+                    ДОЗа
                 </th>
                 <th v-for="(date, index) in dates">
                     {{date}}
@@ -90,6 +110,12 @@
             >
                 <td class="statistic-table__first-col statistic-table__sticky-col">
                     {{item.keyword}}
+                </td>
+                <td class="statistic-table__second-col statistic-table__sticky-col">
+                    {{item.frequency}}
+                </td>
+                <td class="statistic-table__third-col statistic-table__sticky-col">
+                    {{item.frequency_of_cheating}}
                 </td>
                 <template v-for="(date, index) in dates">
                     <statistic-row
@@ -185,7 +211,22 @@
                 colorScheme: "top-progress",
                 pickerOptions: {
                     shortcuts: [{
-                        text: 'Неделя',
+                        text: 'Сегодня',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }, {
+                        text: 'Вчера',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(start.getTime() - 3600 * 1000 * 24);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }, {
+                        text: '1 Неделя',
                         onClick(picker) {
                             const end = new Date();
                             const start = new Date();
@@ -193,7 +234,7 @@
                             picker.$emit('pick', [start, end]);
                         }
                     }, {
-                        text: 'Месяц',
+                        text: '1 Месяц',
                         onClick(picker) {
                             const end = new Date();
                             const start = new Date();
@@ -201,34 +242,22 @@
                             picker.$emit('pick', [start, end]);
                         }
                     }, {
-                        text: '3 месяца',
+                        text: 'Текущий месяц',
                         onClick(picker) {
                             const end = new Date();
-                            const start = new Date();
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+                            const start = new Date(end.getFullYear(), end.getMonth(), 1);
                             picker.$emit('pick', [start, end]);
                         }
-                    },
-
-                        {
-                            text: '6 месяцев',
-                            onClick(picker) {
-                                const end = new Date();
-                                const start = new Date();
-                                start.setTime(start.getTime() - 3600 * 1000 * 24 * 180);
-                                picker.$emit('pick', [start, end]);
-                            }
-                        },
-                        {
-                            text: 'Год',
-                            onClick(picker) {
-                                const end = new Date();
-                                const start = new Date();
-                                start.setTime(start.getTime() - 3600 * 1000 * 24 * 360);
-                                picker.$emit('pick', [start, end]);
-                            }
+                    }, {
+                        text: 'Прошлый месяц',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date(end.getFullYear(), end.getMonth() - 1, 1);
+                            end.setMonth(end.getMonth() - 1);
+                            end.setDate(0);
+                            picker.$emit('pick', [start, end]);
                         }
-                    ]
+                    }]
                 },
                 statisticItemId:0,
                 dates: [],
@@ -249,10 +278,41 @@
                         label: 'Desktop',
                     }
                 ],
+                sorts: [
+                    {
+                        value: 'keyword|asc',
+                        label: 'Запросы от А до Я',
+                    },
+                    {
+                        value: 'keyword|desc',
+                        label: 'Запросы от Я до A',
+                    },
+                    {
+                        value: 'frequency|desc',
+                        label: 'Частота по убыванию',
+                    },
+                    {
+                        value: 'frequency|asc',
+                        label: 'Частота по возрастанию',
+                    },
+                    {
+                        value: 'frequency_of_cheating|desc',
+                        label: 'ДОЗа по убыванию',
+                    },
+                    {
+                        value: 'frequency_of_cheating|asc',
+                        label: 'ДОЗа по возрастанию',
+                    },
+                    {
+                        value: null,
+                        label: 'По умолчанию',
+                    },
+                ],
                 filters: {
                     project_id:null,
                     device_id: 0,
-                    date_range: []
+                    date_range: [],
+                    order_by: null
                 },
             }
         },
